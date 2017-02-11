@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="283-QN-tlB" customClass="RSUIImageViewMultiborder">
+                                <rect key="frame" x="75.666666666666686" y="40" width="288" height="288"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="283-QN-tlB" secondAttribute="height" multiplier="1:1" id="3NO-lg-p9r"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="border_color_1">
+                                        <color key="value" red="0.36685918429999997" green="0.72415167089999999" blue="0.0030215042640000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="border_color_2">
+                                        <color key="value" red="1" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="border_width_1">
+                                        <real key="value" value="14"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="border_width_2">
+                                        <real key="value" value="9"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="border_color_3">
+                                        <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="border_color_4">
+                                        <color key="value" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="border_width_3">
+                                        <real key="value" value="13"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="border_width_4">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="2.png"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isRounded" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I4t-o5-gCu">
+                                <rect key="frame" x="348" y="394" width="40" height="20"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="kco-HQ-91o"/>
+                                    <constraint firstAttribute="height" constant="20" id="zDI-Hp-pVM"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RSUIImageViewMultiborder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J7P-AY-Lf3">
+                                <rect key="frame" x="75.666666666666686" y="336" width="288" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="SSu-UX-180"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UIImageView" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAY-Jm-y8A">
+                                <rect key="frame" x="371.66666666666663" y="336" width="287.99999999999989" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="ylG-um-lTl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2.png" translatesAutoresizingMaskIntoConstraints="NO" id="RS3-pG-LMf">
+                                <rect key="frame" x="372" y="40" width="288" height="288"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="RS3-pG-LMf" secondAttribute="height" multiplier="1:1" id="XKC-dL-hsg"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="J7P-AY-Lf3" firstAttribute="leading" secondItem="283-QN-tlB" secondAttribute="leading" id="6x6-HG-L03"/>
+                            <constraint firstItem="I4t-o5-gCu" firstAttribute="leading" secondItem="J7P-AY-Lf3" secondAttribute="trailing" constant="-15.5" id="AEp-Hw-oXd"/>
+                            <constraint firstItem="J7P-AY-Lf3" firstAttribute="top" secondItem="283-QN-tlB" secondAttribute="bottom" constant="8" id="Afn-w7-4VM"/>
+                            <constraint firstItem="I4t-o5-gCu" firstAttribute="top" secondItem="J7P-AY-Lf3" secondAttribute="bottom" constant="30" id="AsG-ke-JaO"/>
+                            <constraint firstItem="XAY-Jm-y8A" firstAttribute="leading" secondItem="I4t-o5-gCu" secondAttribute="trailing" constant="-16.5" id="IUP-B6-TmO"/>
+                            <constraint firstItem="J7P-AY-Lf3" firstAttribute="trailing" secondItem="283-QN-tlB" secondAttribute="trailing" id="Kph-GA-RbB"/>
+                            <constraint firstItem="283-QN-tlB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="P3J-Sg-jld"/>
+                            <constraint firstItem="XAY-Jm-y8A" firstAttribute="top" secondItem="RS3-pG-LMf" secondAttribute="bottom" constant="8" id="Qw4-VW-NP9"/>
+                            <constraint firstItem="XAY-Jm-y8A" firstAttribute="trailing" secondItem="RS3-pG-LMf" secondAttribute="trailing" id="Rf7-Ih-1rL"/>
+                            <constraint firstItem="I4t-o5-gCu" firstAttribute="top" secondItem="XAY-Jm-y8A" secondAttribute="bottom" constant="30" id="SYy-vm-ZqX"/>
+                            <constraint firstItem="RS3-pG-LMf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="qZp-RJ-5i1"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="I4t-o5-gCu" secondAttribute="bottom" id="rYw-hQ-g2Y"/>
+                            <constraint firstItem="I4t-o5-gCu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sRP-2I-LMR"/>
+                            <constraint firstItem="XAY-Jm-y8A" firstAttribute="leading" secondItem="RS3-pG-LMf" secondAttribute="leading" id="t5f-TJ-npi"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138.0809595202399" y="135.19999999999999"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="2.png" width="617" height="1000"/>
+    </resources>
+</document>
