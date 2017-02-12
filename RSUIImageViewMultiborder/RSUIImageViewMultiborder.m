@@ -19,7 +19,8 @@
 //  SOFTWARE.
 
 #import "RSUIImageViewMultiborder.h"
-#import <objc/objc-runtime.h>
+//#import <objc/objc-runtime.h>     //this header is only available to simulator SDK
+#import <objc/runtime.h>
 
 @implementation RSUIImageViewMultiborder
 
