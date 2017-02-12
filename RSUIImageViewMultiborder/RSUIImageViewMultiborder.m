@@ -42,6 +42,20 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
     borderWidthPropertyNames = [allPropertyNames filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF beginswith 'border_width'"]];
 }
 
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    /**
+     *  This code segment may confuse you but here is the explanation. We
+     *  set the isRounded property before the view is properly layoutted.
+     *  so settings it's corner radius before-hand layout sets it wrong
+     *  value. so after a layout is done we re-apply the isRounded
+     *  value, so that proper corner radius is set.
+     */
+    self.isRounded = _isRounded;
+}
+    
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
@@ -68,6 +82,10 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
     {
         self.layer.cornerRadius = CGRectGetMidX(self.bounds);
         self.clipsToBounds = YES;
+    }
+    else
+    {
+        self.layer.cornerRadius = 0.0;
     }
 }
 
