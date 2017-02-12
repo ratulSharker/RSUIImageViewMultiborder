@@ -111,34 +111,40 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
  */
 -(void)handleBorderDrawing:(CGContextRef)ctx
 {
+    NSAssert(borderColorPropertyNames.count == borderWidthPropertyNames.count, @"inequal number of border-color and border-width property");
+    
     UIColor *borderColor;
     CGFloat summedBorderWidth = 0, currentBorderWidth;
-    if(borderColorPropertyNames.count == borderWidthPropertyNames.count)
-        for(unsigned int index = 0; index < borderWidthPropertyNames.count; index++)
+    for(unsigned int index = 0; index < borderWidthPropertyNames.count; index++)
+    {
+        borderColor = [self valueForKey:borderColorPropertyNames[index]];
+        currentBorderWidth = [[self valueForKey:borderWidthPropertyNames[index]] doubleValue];
+        CGContextSetStrokeColorWithColor(ctx, borderColor.CGColor);
+        CGContextSetLineWidth(ctx, currentBorderWidth);
+        
+        if(_isRounded)
         {
-            borderColor = [self valueForKey:borderColorPropertyNames[index]];
-            currentBorderWidth = [[self valueForKey:borderWidthPropertyNames[index]] doubleValue];
-            CGContextSetStrokeColorWithColor(ctx, borderColor.CGColor);
-            CGContextSetLineWidth(ctx, currentBorderWidth);
-            
-            if(_isRounded)
-                CGContextAddEllipseInRect(ctx, CGRectInset(self.bounds,
-                                                           summedBorderWidth + currentBorderWidth /2.0,
-                                                           summedBorderWidth + currentBorderWidth /2.0));
-            else
-                CGContextAddRect(ctx, CGRectInset(self.bounds,
-                                                  summedBorderWidth + currentBorderWidth /2.0,
-                                                  summedBorderWidth + currentBorderWidth /2.0));
-            //
-            //  upcoming feature
-            //
-            //            CGFloat ra[] = {2 , 2};
-            //            CGContextSetLineDash(ctx, 0, ra, 2);
-            //            CGContextSetLineCap(ctx, kCGLineCapRound);
-            summedBorderWidth += currentBorderWidth;
-            
-            CGContextStrokePath(ctx);
+            CGContextAddEllipseInRect(ctx, CGRectInset(self.bounds,
+                                                       summedBorderWidth + currentBorderWidth /2.0,
+                                                       summedBorderWidth + currentBorderWidth /2.0));
         }
+        else
+        {
+            CGContextAddRect(ctx, CGRectInset(self.bounds,
+                                              summedBorderWidth + currentBorderWidth /2.0,
+                                              summedBorderWidth + currentBorderWidth /2.0));
+        }
+
+        //
+        //  upcoming feature
+        //
+        //            CGFloat ra[] = {2 , 2};
+        //            CGContextSetLineDash(ctx, 0, ra, 2);
+        //            CGContextSetLineCap(ctx, kCGLineCapRound);
+        summedBorderWidth += currentBorderWidth;
+        
+        CGContextStrokePath(ctx);
+    }
 }
 
 
