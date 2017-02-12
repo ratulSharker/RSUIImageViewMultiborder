@@ -114,7 +114,6 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
     UIColor *borderColor;
     CGFloat summedBorderWidth = 0, currentBorderWidth;
     if(borderColorPropertyNames.count == borderWidthPropertyNames.count)
-    {
         for(unsigned int index = 0; index < borderWidthPropertyNames.count; index++)
         {
             borderColor = [self valueForKey:borderColorPropertyNames[index]];
@@ -123,17 +122,13 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
             CGContextSetLineWidth(ctx, currentBorderWidth);
             
             if(_isRounded)
-            {
                 CGContextAddEllipseInRect(ctx, CGRectInset(self.bounds,
                                                            summedBorderWidth + currentBorderWidth /2.0,
                                                            summedBorderWidth + currentBorderWidth /2.0));
-            }
             else
-            {
                 CGContextAddRect(ctx, CGRectInset(self.bounds,
                                                   summedBorderWidth + currentBorderWidth /2.0,
                                                   summedBorderWidth + currentBorderWidth /2.0));
-            }
             //
             //  upcoming feature
             //
@@ -144,7 +139,6 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
             
             CGContextStrokePath(ctx);
         }
-    }
 }
 
 
