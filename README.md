@@ -2,6 +2,8 @@
 <img src="https://github.com/ratulSharker/Gif-Demonstration/blob/master/RSUIImageViewMultiborder/banner.png" style='color:#FF0000'>
 
 <a href="https://codebeat.co/projects/github-com-ratulsharker-rsuiimageviewmultiborder"><img alt="codebeat badge" src="https://codebeat.co/badges/e1ce0815-765a-4e65-9365-c58a7dec7d29" /></a>
+[![Build Status](https://travis-ci.org/ratulSharker/RSUIImageViewMultiborder.svg?branch=master)](https://travis-ci.org/ratulSharker/RSUIImageViewMultiborder)
+[![Language](https://img.shields.io/badge/language-obj--c-orange.svg)](https://en.wikipedia.org/wiki/IOS)
 [![Platform](https://img.shields.io/badge/platform-ios-green.svg)](https://en.wikipedia.org/wiki/IOS)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -12,9 +14,7 @@
 # Background
 Customising ios application are quiet challenging when there is no apple provided user interface or api to that. Providing multiple border alongside the shown image is one of that. Like following:
 
-//
-//  give an image here of 
-//
+<img src="https://github.com/ratulSharker/Gif-Demonstration/blob/master/RSUIImageViewMultiborder/sample-border-requirement.png" alt="Sample bordererd image" height='217px' width='219px'>
 
 To achieve that we have to put `UIImageView` inside an `UIView` as a sub-view and changing the container view's background color. Another way to achive is to subclass the widget and implement the `drawRect:` method to draw whatever we need. But apple discourages to implement the `drawRect:`, and even they didn't executes your `drawRect:` implementation. 
 
@@ -34,8 +34,8 @@ Copy the class named [`RSUIImageViewMultiborder`](https://github.com/ratulSharke
 Adding a new border is the most easiest part. To add a new border in `RSUIImageViewCustomBadge.h` add two property of the following format
 
 ```objective-c
-  @property IBInspectable UIColor *border_color_xxx;
-  @property IBInspectable CGFloat border_width_xxx;
+@property IBInspectable UIColor *border_color_xxx;
+@property IBInspectable CGFloat border_width_xxx;
 ```
 
 which represents a border.
@@ -43,17 +43,17 @@ which represents a border.
 Things we needed to take into account, is that, the border declaration preceedes the other border are rendered in the outer section from other border. For example
 
 ```objective-c
-  @property IBInspectable UIColor     *border_color_1;  //first border - the outmost border
-  @property IBInspectable CGFloat     border_width_1;
+@property IBInspectable UIColor     *border_color_1;  //first border - the outmost border
+@property IBInspectable CGFloat     border_width_1;
 
-  @property IBInspectable UIColor     *border_color_2;  //second border
-  @property IBInspectable CGFloat     border_width_2;
+@property IBInspectable UIColor     *border_color_2;  //second border
+@property IBInspectable CGFloat     border_width_2;
 
-  @property IBInspectable UIColor     *border_color_3;  //third border from the outmost border
-  @property IBInspectable CGFloat     border_width_3;
+@property IBInspectable UIColor     *border_color_3;  //third border from the outmost border
+@property IBInspectable CGFloat     border_width_3;
 
-  @property IBInspectable UIColor     *border_color_4;  //fourth border
-  @property IBInspectable CGFloat     border_width_4;
+@property IBInspectable UIColor     *border_color_4;  //fourth border
+@property IBInspectable CGFloat     border_width_4;
 ```
 
 so find the appropriate position of the border, where to add it and feel free to delete any unnecessary border you are not using. Deleting a border requires to delete two property indicating a border.
@@ -73,13 +73,14 @@ so find the appropriate position of the border, where to add it and feel free to
 #  Features
 There are several features which are not ready yet. Features completed are marked.
 
+- [X] CI-integration.
 - [X] Support rounded and non-rounded regular border.
 - [X] Support IBDesignable to be customized from interface builder.
 - [X] Adding a border just adding necessary properties.
 - [ ] Handle image drawing for all content mode.
 - [ ] Available in cocoapod.
-- [ ] Finding a cleaner way to add border while installed via cocoapod
-- [ ] Supporting line drawing style in interface builder (i.e dotted line, rounded dotted line etc)
+- [ ] Finding a cleaner way to add border while installed via cocoapod.
+- [ ] Supporting line drawing style in interface builder (i.e dotted line, rounded dotted line etc).
 
 # License
 
