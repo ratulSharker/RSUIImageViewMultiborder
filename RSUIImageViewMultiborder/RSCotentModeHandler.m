@@ -18,11 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "RSUIImageViewMultiborder+ContentModeHandler.h"
+#import "RSCotentModeHandler.h"
 
-@implementation RSUIImageViewMultiborder (ContentModeHandler)
+@implementation RSCotentModeHandler
 
-#pragma mark private image content mode maintainer method
 
 /**
  *  Get an resized image according to the content mode in a given rect
@@ -37,34 +36,32 @@
                       forRect:(CGRect)rect
 {
     switch (contentMode) {
-        case UIViewContentModeScaleAspectFill:
-        case UIViewContentModeScaleAspectFit:
+            
+            
+        case UIViewContentModeScaleAspectFill : case UIViewContentModeScaleAspectFit:
             // contents scaled to fit with fixed aspect. remainder is transparent
             return [self handleAspectFillOrFitContentMode:contentMode forImage:image forRect:rect];
-        
-
-        case UIViewContentModeCenter:             // contents remain same size. positioned adjusted.
-        case UIViewContentModeTop:
-        case UIViewContentModeBottom:
+            
+            //all center modes
+        case UIViewContentModeCenter : case UIViewContentModeTop: case UIViewContentModeBottom:
             return [self handleAllCenterContentMode:contentMode forImage:image forRect:rect];
             
-        case UIViewContentModeLeft:
-        case UIViewContentModeTopLeft:
-        case UIViewContentModeBottomLeft:
+            //all left modes
+        case UIViewContentModeLeft: case UIViewContentModeTopLeft: case UIViewContentModeBottomLeft:
             return [self handleAllLeftContentMode:contentMode forImage:image forRect:rect];
         
-            
-        case UIViewContentModeRight:
-        case UIViewContentModeTopRight:
-        case UIViewContentModeBottomRight:
+            //all right modes
+        case UIViewContentModeRight: case UIViewContentModeTopRight: case UIViewContentModeBottomRight:
             return [self handleAllRightContentMode:contentMode forImage:image forRect:rect];
             
-        case UIViewContentModeRedraw:              // redraw on bounds change (calls -setNeedsDisplay
-        case UIViewContentModeScaleToFill:
+            //unchanged
+        case UIViewContentModeRedraw: case UIViewContentModeScaleToFill:
             return image;
     }
 }
 
+
+#pragma mark private image content mode maintainer method
 /**
  *  Handle the two major content mode in a separate function.
  *
@@ -113,16 +110,17 @@
                             forRect:(CGRect)rect
 {
     CGRect imageDrawnRect = CGRectMake(0, 0, image.size.width, image.size.height);
+    CGFloat fullHeight = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
     switch (contentMode) {
         case UIViewContentModeLeft:
             // center left
             // only need to modify y position of the rect to half way
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect)) / 2.0;
+            imageDrawnRect.origin.y = fullHeight / 2.0;
             break;
         case UIViewContentModeBottomLeft:
             //  left bottom position
             //  need to modify y in this case in full way
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
+            imageDrawnRect.origin.y = fullHeight;
             break;
 //        case UIViewContentModeTopLeft:
 //            //nothing to do
@@ -150,25 +148,27 @@
                               forRect:(CGRect)rect
 {
     CGRect imageDrawnRect = CGRectMake(0, 0, image.size.width, image.size.height);
+    CGFloat fullWidth   = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect)),
+            fullHeight  = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
     switch (contentMode) {
         case UIViewContentModeTop:
             // top center
             // only need to modify x position of the rect to half way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect)) / 2.0;
+            imageDrawnRect.origin.x = fullWidth / 2.0;
             break;
         case UIViewContentModeCenter:
             //  center position
             //  need to modify x and y both half way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect)) / 2.0;
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect)) / 2.0;
+            imageDrawnRect.origin.x = fullWidth / 2.0;
+            imageDrawnRect.origin.y = fullHeight / 2.0;
             break;
         case UIViewContentModeBottom:
             //  center bottom position
             //  need to modify x and y both in this case
             //  modify x half way
             //  modify y full way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect)) / 2.0;
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
+            imageDrawnRect.origin.x = fullWidth / 2.0;
+            imageDrawnRect.origin.y = fullHeight;
             break;
         default:
             break;
@@ -193,25 +193,27 @@
                              forRect:(CGRect)rect
 {
     CGRect imageDrawnRect = CGRectMake(0, 0, image.size.width, image.size.height);
+    CGFloat fullWidth   = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect)),
+            fullHeight  = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
     switch (contentMode) {
         case UIViewContentModeTopRight:
             //  top right most position
             //  only need to modify x position of the rect to full way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect));
+            imageDrawnRect.origin.x = fullWidth;
             break;
         case UIViewContentModeRight:
             //  center right position
             //  need to modify x and y both, but in this case
             //  modify x full way
             //  modify y half way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect));
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect)) / 2.0;
+            imageDrawnRect.origin.x = fullWidth;
+            imageDrawnRect.origin.y = fullHeight / 2.0;
             break;
         case UIViewContentModeBottomRight:
             //  right bottom position
             //  need to modify both x and y, both will be full way through
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect));
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
+            imageDrawnRect.origin.x = fullWidth;
+            imageDrawnRect.origin.y = fullHeight;
             break;
         default:
             break;

@@ -20,7 +20,7 @@
 
 #import "RSUIImageViewMultiborder.h"
 #import "RSUIImageViewMultiborder+PropertyHandler.h"
-#import "RSUIImageViewMultiborder+ContentModeHandler.h"
+#import "RSCotentModeHandler.h"
 
 
 @implementation RSUIImageViewMultiborder
@@ -96,12 +96,12 @@
                                    imageInset);
     
     
-    UIImage *resizedImage = [self.class getImageForUIImage:self.image
-                                               contentMode:self.contentMode
-                                                   forRect:CGRectMake(0,
-                                                                      0,
-                                                                      CGRectGetWidth(imageRect),
-                                                                      CGRectGetHeight(imageRect))];
+    UIImage *resizedImage = [RSCotentModeHandler getImageForUIImage:self.image
+                                                        contentMode:self.contentMode
+                                                            forRect:CGRectMake(0,
+                                                                               0,
+                                                                               CGRectGetWidth(imageRect),
+                                                                               CGRectGetHeight(imageRect))];
     [resizedImage drawInRect:imageRect];
 }
 /**
@@ -117,10 +117,13 @@
     NSAssert([self.class getBorderColorPropertyNames].count == [self.class getBorderWidthPropertyNames].count, @"inequal number of border-color and border-width property");
     
     CGFloat summedBorderWidth = 0, currentBorderWidth;
+    NSArray <NSString*>  *borderColors = [self.class getBorderColorPropertyNames];
+    NSArray <NSString*>  *borderWidths = [self.class getBorderWidthPropertyNames];
+    
     for(unsigned int index = 0; index < [self.class getBorderColorPropertyNames].count; index++)
     {
-        UIColor *borderColor = [self valueForKey:[self.class getBorderColorPropertyNames][index]];
-        currentBorderWidth = [[self valueForKey:[self.class getBorderWidthPropertyNames][index]] doubleValue];
+        UIColor *borderColor = [self valueForKey:borderColors[index]];
+        currentBorderWidth = [[self valueForKey:borderWidths[index]] doubleValue];
         
         if(!currentBorderWidth) continue;//if border is equal to zero, just ignore the drawing
         

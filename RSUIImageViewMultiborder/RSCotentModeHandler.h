@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "RSUIImageViewMultiborder.h"
+#import <UIKit/UIKit.h>
 
-@interface RSUIImageViewMultiborder (ContentModeHandler)
+@interface RSCotentModeHandler : NSObject
 
 /**
  *  Get an resized image according to the content mode in a given rect
