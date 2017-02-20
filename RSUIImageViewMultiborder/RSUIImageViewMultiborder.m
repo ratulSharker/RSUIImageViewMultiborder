@@ -120,7 +120,7 @@
     NSArray <NSString*>  *borderColors = [self.class getBorderColorPropertyNames];
     NSArray <NSString*>  *borderWidths = [self.class getBorderWidthPropertyNames];
     
-    for(unsigned int index = 0; index < [self.class getBorderColorPropertyNames].count; index++)
+    for(unsigned int index = 0; index < borderColors.count; index++)
     {
         UIColor *borderColor = [self valueForKey:borderColors[index]];
         currentBorderWidth = [[self valueForKey:borderWidths[index]] doubleValue];
