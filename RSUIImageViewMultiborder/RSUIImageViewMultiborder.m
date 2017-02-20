@@ -19,28 +19,12 @@
 //  SOFTWARE.
 
 #import "RSUIImageViewMultiborder.h"
-//#import <objc/objc-runtime.h>     //this header is only available to simulator SDK
-#import <objc/runtime.h>
+#import "RSUIImageViewMultiborder+PropertyHandler.h"
+#import "RSUIImageViewMultiborder+ContentModeHandler.h"
+
 
 @implementation RSUIImageViewMultiborder
-
-static NSArray <NSString*>  *borderColorPropertyNames;
-static NSArray <NSString*>  *borderWidthPropertyNames;
-
 @synthesize isRounded = _isRounded;
-
-
-/**
- *  while the class loads, this method is fired, instead of generating 
- *  property names each time the view invalidates, pre-calculate the 
- *  property list will enhance performance.
- */
-+(void)load
-{
-    NSArray <NSString*> *allPropertyNames = [self allPropertyNames];
-    borderColorPropertyNames = [allPropertyNames filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF beginswith 'border_color'"]];
-    borderWidthPropertyNames = [allPropertyNames filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF beginswith 'border_width'"]];
-}
 
 -(void)layoutSubviews
 {
@@ -99,7 +83,7 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
 -(void)handleImageDrawing
 {
     CGFloat imageInset = 0;
-    for(NSString *borderWidthPropertyName in borderWidthPropertyNames)
+    for(NSString *borderWidthPropertyName in [self.class getBorderWidthPropertyNames])
     {
         imageInset += [[self valueForKey:borderWidthPropertyName] doubleValue];
     }
@@ -112,12 +96,12 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
                                    imageInset);
     
     
-    UIImage *resizedImage = [self getCGImageForUIImage:self.image
-                                           contentMode:self.contentMode
-                                               forRect:CGRectMake(0,
-                                                                  0,
-                                                                  CGRectGetWidth(imageRect),
-                                                                  CGRectGetHeight(imageRect))];
+    UIImage *resizedImage = [self.class getImageForUIImage:self.image
+                                               contentMode:self.contentMode
+                                                   forRect:CGRectMake(0,
+                                                                      0,
+                                                                      CGRectGetWidth(imageRect),
+                                                                      CGRectGetHeight(imageRect))];
     [resizedImage drawInRect:imageRect];
 }
 /**
@@ -130,13 +114,13 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
  */
 -(void)handleBorderDrawing:(CGContextRef)ctx
 {
-    NSAssert(borderColorPropertyNames.count == borderWidthPropertyNames.count, @"inequal number of border-color and border-width property");
+    NSAssert([self.class getBorderColorPropertyNames].count == [self.class getBorderWidthPropertyNames].count, @"inequal number of border-color and border-width property");
     
     CGFloat summedBorderWidth = 0, currentBorderWidth;
-    for(unsigned int index = 0; index < borderWidthPropertyNames.count; index++)
+    for(unsigned int index = 0; index < [self.class getBorderColorPropertyNames].count; index++)
     {
-        UIColor *borderColor = [self valueForKey:borderColorPropertyNames[index]];
-        currentBorderWidth = [[self valueForKey:borderWidthPropertyNames[index]] doubleValue];
+        UIColor *borderColor = [self valueForKey:[self.class getBorderColorPropertyNames][index]];
+        currentBorderWidth = [[self valueForKey:[self.class getBorderWidthPropertyNames][index]] doubleValue];
         
         if(!currentBorderWidth) continue;//if border is equal to zero, just ignore the drawing
         
@@ -161,226 +145,4 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
     }
 }
 
-
-#pragma mark private image content mode maintainer method
-/**
- *  Get an resized image according to the content mode in a given rect
- *
- *  @param
- *      image       (which is needed to be resized according to content mode)
- *      contentMode (expected content mode for the image)
- *      rect        (designated rectangle for the image to be rendered)
- */
--(UIImage*)getCGImageForUIImage:(UIImage*)image
-                      contentMode:(UIViewContentMode)contentMode
-                          forRect:(CGRect)rect
-{
-    switch (contentMode) {
-        case UIViewContentModeScaleAspectFill:
-        case UIViewContentModeScaleAspectFit:
-            // contents scaled to fit with fixed aspect. remainder is transparent
-            return [self handleAspectFillOrFitContentMode:contentMode forImage:image forRect:rect];
-        case UIViewContentModeCenter:             // contents remain same size. positioned adjusted.
-        case UIViewContentModeTop:
-        case UIViewContentModeBottom:
-        case UIViewContentModeLeft:
-        case UIViewContentModeRight:
-        case UIViewContentModeTopLeft:
-        case UIViewContentModeTopRight:
-        case UIViewContentModeBottomLeft:
-        case UIViewContentModeBottomRight:
-            return [self handleImagePlacementContentMode:contentMode forImage:image forRect:rect];
-        case UIViewContentModeRedraw:              // redraw on bounds change (calls -setNeedsDisplay
-        case UIViewContentModeScaleToFill:
-            return image;
-    }
-}
-/**
- *  Handle the two major content mode in a separate function.
- *  
- *  @param
- *  contentMode - supported mode is AspectFit or AspectFill.
- *  image       - image which needed to be rendered.
- *  rect        - destination rect.
- */
--(UIImage*)handleAspectFillOrFitContentMode:(UIViewContentMode)contentMode
-                                   forImage:(UIImage*)image
-                                    forRect:(CGRect)rect
-{
-    CGFloat heightRatio = image.size.height / CGRectGetHeight(rect);
-    CGFloat widthRatio = image.size.width / CGRectGetWidth(rect);
-    
-    CGFloat maxRatio = (contentMode == UIViewContentModeScaleAspectFit) ?
-    MAX(heightRatio, widthRatio) : MIN(heightRatio, widthRatio);
-    
-    CGRect resultedImageRect = CGRectMake(0,
-                                          0,
-                                          image.size.width / maxRatio,
-                                          image.size.height / maxRatio);
-    
-    resultedImageRect = CGRectOffset(resultedImageRect,
-                                     CGRectGetMidX(rect) - CGRectGetMidX(resultedImageRect),
-                                     CGRectGetMidY(rect) - CGRectGetMidY(resultedImageRect));
-    
-    return [self getImage:image
-              drawnOnRect:rect.size
-            withImageRect:resultedImageRect];
-}
-
-/**
- *  Handle some common content mode scenarios. handled content modes are
- *  listed following. Common thing for all these modes are that, image size
- *  remains unchanged, but the position of the image is changed.
- *
- *  UIViewContentModeCenter
- *  UIViewContentModeTop
- *  UIViewContentModeBottom
- *  UIViewContentModeLeft
- *  UIViewContentModeRight
- *  UIViewContentModeTopLeft
- *  UIViewContentModeTopRight
- *  UIViewContentModeBottomLeft
- *  UIViewContentModeBottomRight
- *
- *  @param
- *  contentMode - supported mode is listed above.
- *  image       - image which needed to be rendered.
- *  rect        - destination rect.
- */
--(UIImage*)handleImagePlacementContentMode:(UIViewContentMode)contentMode
-                                  forImage:(UIImage*)image
-                                   forRect:(CGRect)rect
-{
-    CGRect imageRect = [self getImageRectForImageSize:image.size
-                                          contentMode:contentMode
-                                              forRect:rect];
-
-    return [self getImage:image drawnOnRect:rect.size withImageRect:imageRect];
-}
-
-/**
- *  Calculate the image for some common content mode.
- *  This function actually acts as an helper for
- *  
- *  -(void) handleImagePlacementContentMode:(UIViewContentMode)contentMode
- *                                 forImage:(UIImage*)image
- *                                  forRect:(CGRect)rect
- *
- *  @param
- *  imageSize   - CGSize of the image
- *  contentMode - UIViewContentMode, according to which image rect will be sized
- *  rect        - CGRect, rect where the image is supposed to be drawn
- */
--(CGRect)getImageRectForImageSize:(CGSize)imageSize
-                      contentMode:(UIViewContentMode)contentMode
-                          forRect:(CGRect)rect
-{
-    CGRect imageDrawnRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
-    switch (contentMode) {
-        case UIViewContentModeLeft:
-            // center left
-            // only need to modify y position of the rect to half way
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect)) / 2.0;
-            break;
-        case UIViewContentModeBottomLeft:
-            //  left bottom position
-            //  need to modify y in this case in full way
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
-            break;
-            /**
-             *  only x related
-             */
-        case UIViewContentModeTop:
-            // top center
-            // only need to modify x position of the rect to half way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect)) / 2.0;
-            break;
-        case UIViewContentModeTopRight:
-            //  top right most position
-            //  only need to modify x position of the rect to full way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect));
-            break;
-            /**
-             *  both x-y related changes
-             */
-        case UIViewContentModeCenter:
-            //  center position
-            //  need to modify x and y both half way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect)) / 2.0;
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect)) / 2.0;
-            break;
-        case UIViewContentModeRight:
-            //  center right position
-            //  need to modify x and y both, but in this case
-            //  modify x full way
-            //  modify y half way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect));
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect)) / 2.0;
-            break;
-        case UIViewContentModeBottom:
-            //  center bottom position
-            //  need to modify x and y both in this case
-            //  modify x half way
-            //  modify y full way
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect)) / 2.0;
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
-            break;
-        case UIViewContentModeBottomRight:
-            //  right bottom position
-            //  need to modify both x and y, both will be full way through
-            imageDrawnRect.origin.x = (CGRectGetWidth(rect) - CGRectGetWidth(imageDrawnRect));
-            imageDrawnRect.origin.y = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
-            break;
-        default:
-            break;
-    }
-    return imageDrawnRect;
-}
-
-/**
- *  Get an image drawn with a given canvas size and given image size
- *
- *  @param
- *      image         (which will be resized)
- *      canvasSize    (whole size of the canvas)
- *      imageRect     (Rect of the image which define both size of the image and the position in the canvas)
- */
--(UIImage*)getImage:(UIImage*)image
-        drawnOnRect:(CGSize)canvasSize
-      withImageRect:(CGRect)imageRect
-{
-    //UIGraphicsBeginImageContext(rect.size);
-    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
-    // Pass 1.0 to force exact pixel size.
-    UIGraphicsBeginImageContextWithOptions(canvasSize, NO, 0.0);
-    [image drawInRect:imageRect];
-    
-    UIImage *resultedImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();;
-    
-    return resultedImage;
-}
-
-/**
- *  Get the list of all properties of this class
- */
-+ (NSArray<NSString*> *)allPropertyNames
-{
-    unsigned count;
-    objc_property_t *properties = class_copyPropertyList([self class], &count);
-    NSMutableArray<NSString*> *rv = [NSMutableArray array];
-    
-    unsigned i;
-    for (i = 0; i < count; i++)
-    {
-        objc_property_t property = properties[i];
-        NSString *name = [NSString stringWithUTF8String:property_getName(property)];
-        [rv addObject:name];
-    }
-    
-    free(properties);
-    
-    return [NSArray arrayWithArray:rv];
-}
 @end

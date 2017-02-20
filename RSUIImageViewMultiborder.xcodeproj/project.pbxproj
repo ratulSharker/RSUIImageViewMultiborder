@@ -25,6 +25,8 @@
 		E752C4271E4F05160038F8F5 /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E752C41D1E4F05160038F8F5 /* 8.jpg */; };
 		E752C4281E4F05160038F8F5 /* 9.png in Resources */ = {isa = PBXBuildFile; fileRef = E752C41E1E4F05160038F8F5 /* 9.png */; };
 		E752C4291E4F05160038F8F5 /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E752C41F1E4F05160038F8F5 /* 10.jpg */; };
+		E774055C1E5B4E94008DBB93 /* RSUIImageViewMultiborder+PropertyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E774055B1E5B4E94008DBB93 /* RSUIImageViewMultiborder+PropertyHandler.m */; };
+		E774055F1E5B518D008DBB93 /* RSUIImageViewMultiborder+ContentModeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E774055E1E5B518D008DBB93 /* RSUIImageViewMultiborder+ContentModeHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,10 @@
 		E752C41D1E4F05160038F8F5 /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
 		E752C41E1E4F05160038F8F5 /* 9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 9.png; sourceTree = "<group>"; };
 		E752C41F1E4F05160038F8F5 /* 10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpg; sourceTree = "<group>"; };
+		E774055A1E5B4E94008DBB93 /* RSUIImageViewMultiborder+PropertyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSUIImageViewMultiborder+PropertyHandler.h"; sourceTree = "<group>"; };
+		E774055B1E5B4E94008DBB93 /* RSUIImageViewMultiborder+PropertyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSUIImageViewMultiborder+PropertyHandler.m"; sourceTree = "<group>"; };
+		E774055D1E5B518D008DBB93 /* RSUIImageViewMultiborder+ContentModeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSUIImageViewMultiborder+ContentModeHandler.h"; sourceTree = "<group>"; };
+		E774055E1E5B518D008DBB93 /* RSUIImageViewMultiborder+ContentModeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSUIImageViewMultiborder+ContentModeHandler.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,10 @@
 			children = (
 				E742E3E51E4CBF1D0077840D /* RSUIImageViewMultiborder.h */,
 				E742E3E61E4CBF1D0077840D /* RSUIImageViewMultiborder.m */,
+				E774055A1E5B4E94008DBB93 /* RSUIImageViewMultiborder+PropertyHandler.h */,
+				E774055B1E5B4E94008DBB93 /* RSUIImageViewMultiborder+PropertyHandler.m */,
+				E774055D1E5B518D008DBB93 /* RSUIImageViewMultiborder+ContentModeHandler.h */,
+				E774055E1E5B518D008DBB93 /* RSUIImageViewMultiborder+ContentModeHandler.m */,
 			);
 			path = RSUIImageViewMultiborder;
 			sourceTree = "<group>";
@@ -216,7 +226,9 @@
 				E742E3ED1E4CBF1D0077840D /* ViewController.m in Sources */,
 				E742E3EC1E4CBF1D0077840D /* main.m in Sources */,
 				E742E3E71E4CBF1D0077840D /* AppDelegate.m in Sources */,
+				E774055C1E5B4E94008DBB93 /* RSUIImageViewMultiborder+PropertyHandler.m in Sources */,
 				E742E3EE1E4CBF1D0077840D /* RSUIImageViewMultiborder.m in Sources */,
+				E774055F1E5B518D008DBB93 /* RSUIImageViewMultiborder+ContentModeHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

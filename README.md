@@ -26,7 +26,7 @@ TheUIImageView class does not draw its content using the drawRect: method. Use i
 So here it is, `UIView` is subclassed and the `UIImage` is drawn inside with proper content mode specified, maintaining specified number of border.
 
 # Installation
-Copy the class named [`RSUIImageViewMultiborder`](https://github.com/ratulSharker/RSUIImageViewMultiborder/tree/master/RSUIImageViewMultiborder) and declare as the subclass of your UIView in interface builder.
+Copy the class named [`RSUIImageViewMultiborder`](https://github.com/ratulSharker/RSUIImageViewMultiborder/tree/master/RSUIImageViewMultiborder) and two category files. In interface builder take an `UIView` and set the custom class as `RSUIImageViewMultiborder`.
 
 `RSUIImageViewCustomBadge` will be available through cocoapod soon.
 
