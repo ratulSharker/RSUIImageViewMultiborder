@@ -12,11 +12,11 @@
 
 
 # Background
-Customising ios application are quiet challenging when there is no apple provided user interface or api to that. Providing multiple border alongside the shown image is one of that. Like following:
+Customising ios application are quiet challenging when there is no apple provided user interface or api to do that. Showing multiple border alongside the shown image is one of that. Like following:
 
 <img src="https://github.com/ratulSharker/Gif-Demonstration/blob/master/RSUIImageViewMultiborder/sample-border-requirement.png" alt="Sample bordererd image" height='217px' width='219px'>
 
-To achieve that we have to put `UIImageView` inside an `UIView` as a sub-view and changing the container view's background color. Another way to achive is to subclass the widget and implement the `drawRect:` method to draw whatever we need. But apple discourages to implement the `drawRect:`, and even they didn't executes your `drawRect:` implementation. 
+To achieve that we have to put `UIImageView` inside an `UIView` as a sub-view and changing the container view's background color. Another way to achive is to subclass the `UIImageView` and implement the `drawRect:` method to draw whatever we need. But apple discourages to implement the `drawRect:`, and even they didn't executes your `drawRect:` implementation. 
 
 Directly from the [appledoc](https://developer.apple.com/reference/uikit/uiimageview?language=objc)
 
@@ -77,7 +77,7 @@ There are several features which are not ready yet. Features completed are marke
 - [X] Support rounded and non-rounded regular border.
 - [X] Support IBDesignable to be customized from interface builder.
 - [X] Adding a border just adding necessary properties.
-- [ ] Handle image drawing for all content mode.
+- [X] Handle image drawing for all content mode.
 - [ ] Available in cocoapod.
 - [ ] Finding a cleaner way to add border while installed via cocoapod.
 - [ ] Supporting line drawing style in interface builder (i.e dotted line, rounded dotted line etc).
