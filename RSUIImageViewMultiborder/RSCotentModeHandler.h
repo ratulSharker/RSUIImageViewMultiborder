@@ -30,8 +30,8 @@
  *      contentMode -   expected content mode for the image
  *      rect        -   designated rectangle for the image to be rendered
  */
-+(UIImage*)getImageForUIImage:(UIImage*)image
-                  contentMode:(UIViewContentMode)contentMode
-                      forRect:(CGRect)rect;
++ (UIImage*)getImageForUIImage:(UIImage*)image
+                   contentMode:(UIViewContentMode)contentMode
+                       forRect:(CGRect)rect;
 
 @end

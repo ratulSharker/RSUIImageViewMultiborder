@@ -28,21 +28,36 @@ static NSArray <NSString*>  *borderColorPropertyNames;
 static NSArray <NSString*>  *borderWidthPropertyNames;
 
 /**
- *  Get all border color properties extracted from class
- *  @runtime
+ *  Get the total number of border count
+ *  it asserts on the total declared property
  */
-+(NSArray <NSString*>*)getBorderColorPropertyNames
++ (NSUInteger)getBorderCount
 {
-    return borderColorPropertyNames;
+    NSAssert(borderColorPropertyNames.count == borderWidthPropertyNames.count, @"inequal number of border-color and border-width property");
+    
+    return borderColorPropertyNames.count;
 }
 
 /**
- *  Get all border width properties extracted from class
- *  @runtime
+ *  Get the border color of a particular border
+ *  indexed via the parameter index.
  */
-+(NSArray <NSString*>*) getBorderWidthPropertyNames
+- (UIColor*)getBorderColorAtIndex:(NSUInteger)index
 {
-    return borderWidthPropertyNames;
+    NSAssert(index < [self.class getBorderCount], @"array index out of bound for color access");
+    NSString *propertyName = borderColorPropertyNames[index];
+    return [self valueForKey:propertyName];
+}
+
+/**
+ *  Get the border width of a particular border
+ *  indexed via the parameter index.
+ */
+- (CGFloat)getBorderWidthAtIndex:(NSUInteger)index
+{
+    NSAssert(index < [self.class getBorderCount], @"array index out of bound for width access");
+    NSString *propertyName = borderWidthPropertyNames[index];
+    return [[self valueForKey:propertyName] doubleValue];
 }
 
 /**
@@ -50,7 +65,7 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
  *  property names each time the view invalidates, pre-calculate the
  *  property list will enhance performance.
  */
-+(void)load
++ (void)load
 {
     NSArray <NSString*> *allPropertyNames = [self allPropertyNames];
     borderColorPropertyNames = [allPropertyNames filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF beginswith 'border_color'"]];
@@ -78,6 +93,5 @@ static NSArray <NSString*>  *borderWidthPropertyNames;
     
     return [NSArray arrayWithArray:rv];
 }
-
 
 @end

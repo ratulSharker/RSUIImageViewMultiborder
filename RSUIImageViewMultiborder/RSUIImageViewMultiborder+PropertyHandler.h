@@ -23,15 +23,21 @@
 @interface RSUIImageViewMultiborder (PropertyHandler)
 
 /**
- *  Get all border color properties extracted from class
- *  @runtime
+ *  Get the total number of border count
+ *  it asserts on the total declared property
  */
-+(NSArray <NSString*>*)getBorderColorPropertyNames;
++ (NSUInteger)getBorderCount;
 
 /**
- *  Get all border width properties extracted from class
- *  @runtime
+ *  Get the border color of a particular border
+ *  indexed via the parameter index.
  */
-+(NSArray <NSString*>*) getBorderWidthPropertyNames;
+- (UIColor*)getBorderColorAtIndex:(NSUInteger)index;
+
+/**
+ *  Get the border width of a particular border
+ *  indexed via the parameter index.
+ */
+- (CGFloat)getBorderWidthAtIndex:(NSUInteger)index;
 
 @end

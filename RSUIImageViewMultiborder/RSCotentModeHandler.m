@@ -31,9 +31,9 @@
  *      contentMode -   expected content mode for the image
  *      rect        -   designated rectangle for the image to be rendered
  */
-+(UIImage*)getImageForUIImage:(UIImage*)image
-                  contentMode:(UIViewContentMode)contentMode
-                      forRect:(CGRect)rect
++ (UIImage*)getImageForUIImage:(UIImage*)image
+                   contentMode:(UIViewContentMode)contentMode
+                       forRect:(CGRect)rect
 {
     switch (contentMode) {
             
@@ -70,9 +70,9 @@
  *      image       - image which needed to be rendered.
  *      rect        - destination rect.
  */
-+(UIImage*)handleAspectFillOrFitContentMode:(UIViewContentMode)contentMode
-                                   forImage:(UIImage*)image
-                                    forRect:(CGRect)rect
++ (UIImage*)handleAspectFillOrFitContentMode:(UIViewContentMode)contentMode
+                                    forImage:(UIImage*)image
+                                     forRect:(CGRect)rect
 {
     CGFloat heightRatio = image.size.height / CGRectGetHeight(rect);
     CGFloat widthRatio = image.size.width / CGRectGetWidth(rect);
@@ -105,9 +105,9 @@
  *      image       -   image which is about to be resized
  *      rect        -   container rect, where the image will be rendered
  */
-+(UIImage*)handleAllLeftContentMode:(UIViewContentMode)contentMode
-                           forImage:(UIImage*)image
-                            forRect:(CGRect)rect
++ (UIImage*)handleAllLeftContentMode:(UIViewContentMode)contentMode
+                            forImage:(UIImage*)image
+                             forRect:(CGRect)rect
 {
     CGRect imageDrawnRect = CGRectMake(0, 0, image.size.width, image.size.height);
     CGFloat fullHeight = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
@@ -143,9 +143,9 @@
  *      image       -   image which is about to be resized
  *      rect        -   container rect, where the image will be rendered
  */
-+(UIImage*)handleAllCenterContentMode:(UIViewContentMode)contentMode
-                             forImage:(UIImage*)image
-                              forRect:(CGRect)rect
++ (UIImage*)handleAllCenterContentMode:(UIViewContentMode)contentMode
+                              forImage:(UIImage*)image
+                               forRect:(CGRect)rect
 {
     CGRect imageDrawnRect = CGRectMake(0, 0, image.size.width, image.size.height);
     CGFloat fullHeight  = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
@@ -188,9 +188,9 @@
  *      image       -   image which is about to be resized
  *      rect        -   container rect, where the image will be rendered
  */
-+(UIImage*)handleAllRightContentMode:(UIViewContentMode)contentMode
-                            forImage:(UIImage*)image
-                             forRect:(CGRect)rect
++ (UIImage*)handleAllRightContentMode:(UIViewContentMode)contentMode
+                             forImage:(UIImage*)image
+                              forRect:(CGRect)rect
 {
     CGRect imageDrawnRect = CGRectMake(0, 0, image.size.width, image.size.height);
     CGFloat fullHeight  = (CGRectGetHeight(rect) - CGRectGetHeight(imageDrawnRect));
@@ -230,9 +230,9 @@
  *      canvasSize  -   whole size of the canvas
  *      imageRect   -   Rect of the image which define both size of the image and the position in the canvas
  */
-+(UIImage*)getImage:(UIImage*)image
-        drawnOnRect:(CGSize)canvasSize
-      withImageRect:(CGRect)imageRect
++ (UIImage*)getImage:(UIImage*)image
+         drawnOnRect:(CGSize)canvasSize
+       withImageRect:(CGRect)imageRect
 {
     //UIGraphicsBeginImageContext(rect.size);
     // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).

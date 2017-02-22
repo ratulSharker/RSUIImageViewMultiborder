@@ -26,7 +26,7 @@
 @implementation RSUIImageViewMultiborder
 @synthesize isRounded = _isRounded;
 
--(void)layoutSubviews
+- (void)layoutSubviews
 {
     [super layoutSubviews];
     
@@ -55,11 +55,11 @@
 }
 
 #pragma mark setMethod
--(BOOL)isRounded
+- (BOOL)isRounded
 {
     return self.isRounded;
 }
--(void)setIsRounded:(BOOL)isRounded
+- (void)setIsRounded:(BOOL)isRounded
 {
     _isRounded = isRounded;
     if(_isRounded)
@@ -80,12 +80,12 @@
  *  self.contentMode, then draw the image according to
  *  the inset created by the border.
  */
--(void)handleImageDrawing
+- (void)handleImageDrawing
 {
     CGFloat imageInset = 0;
-    for(NSString *borderWidthPropertyName in [self.class getBorderWidthPropertyNames])
+    for(unsigned int index=0;index < [self.class getBorderCount]; index++)
     {
-        imageInset += [[self valueForKey:borderWidthPropertyName] doubleValue];
+        imageInset += [self getBorderWidthAtIndex:index];
     }
     
     //
@@ -112,40 +112,54 @@
  *  consideration of property "isRounded". An elipse is been drawn on
  *  rounded case and an rect is drawn on non-rounded case.
  */
--(void)handleBorderDrawing:(CGContextRef)ctx
+- (void)handleBorderDrawing:(CGContextRef)ctx
 {
-    NSAssert([self.class getBorderColorPropertyNames].count == [self.class getBorderWidthPropertyNames].count, @"inequal number of border-color and border-width property");
-    
     CGFloat summedBorderWidth = 0, currentBorderWidth;
-    NSArray <NSString*>  *borderColors = [self.class getBorderColorPropertyNames];
-    NSArray <NSString*>  *borderWidths = [self.class getBorderWidthPropertyNames];
     
-    for(unsigned int index = 0; index < borderColors.count; index++)
+    for(unsigned int index = 0; index < [self.class getBorderCount]; index++)
     {
-        UIColor *borderColor = [self valueForKey:borderColors[index]];
-        currentBorderWidth = [[self valueForKey:borderWidths[index]] doubleValue];
+        currentBorderWidth = [self getBorderWidthAtIndex:index];
         
         if(!currentBorderWidth) continue;//if border is equal to zero, just ignore the drawing
         
-        CGContextSetStrokeColorWithColor(ctx, borderColor.CGColor);
-        CGContextSetLineWidth(ctx, currentBorderWidth);
-        
         CGFloat size = summedBorderWidth + currentBorderWidth /2.0;
         
-        if(_isRounded)
-            CGContextAddEllipseInRect(ctx, CGRectInset(self.bounds,size,size));
-        else
-            CGContextAddRect(ctx, CGRectInset(self.bounds,size,size));
-
-        //
-        //  upcoming feature
-        //
-        //            CGFloat ra[] = {2 , 2};
-        //            CGContextSetLineDash(ctx, 0, ra, 2);
-        //            CGContextSetLineCap(ctx, kCGLineCapRound);
-        summedBorderWidth += currentBorderWidth;        
-        CGContextStrokePath(ctx);
+        [self drawBorderInContext:ctx
+                          atIndex:index
+                           inRect:CGRectInset(self.bounds,size,size)];
+        
+        summedBorderWidth += currentBorderWidth;
     }
 }
 
+/**
+ *  This is the actual method which actually draws
+ *  each line, given the following parameters
+ *  
+ *  @param
+ *      ctx     -   CGContextRef of the current view drawing
+ *      index   -   NSUIteger index of the border, which is about to drawn
+ *      rect    -   CGRect, where the ellipse or rectagnle is about to be drawn
+ *                  according to the isRounded property
+ */
+- (void)drawBorderInContext:(CGContextRef)ctx
+                   atIndex:(unsigned int)index
+                    inRect:(CGRect)rect
+{
+    CGContextSetStrokeColorWithColor(ctx, [self getBorderColorAtIndex:index].CGColor);
+    CGContextSetLineWidth(ctx, [self getBorderWidthAtIndex:index]);
+    
+    if(_isRounded)
+        CGContextAddEllipseInRect(ctx, rect);
+    else
+        CGContextAddRect(ctx, rect);
+    
+    //
+    //  upcoming feature
+    //
+    //            CGFloat ra[] = {2 , 2};
+    //            CGContextSetLineDash(ctx, 0, ra, 2);
+    //            CGContextSetLineCap(ctx, kCGLineCapRound);
+    CGContextStrokePath(ctx);
+}
 @end
